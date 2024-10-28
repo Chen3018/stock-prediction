@@ -1,0 +1,19 @@
+Frontend:
+    Use:
+        React js
+    Hosted by:
+        Vercel
+    Does:
+        Allows user to search and choose a stock to predict prices Frontend
+
+Backend:
+    Use:
+        Flask
+    Hosted by:
+        Render
+    Apis:
+        Return stock list for front end: name, ticker, latest prices
+        Run the model on a stock to predict prices
+
+Model:
+    Train and test on google colab
