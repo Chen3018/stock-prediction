@@ -13,7 +13,7 @@ const CompanyPage = () => {
   useEffect(() => {
     const fetchCompany = async () => {
       try {
-        const res = await fetch(`/api/company/${id}`);
+        const res = await fetch(`/api/companies/info/${id}`);
         const data = await res.json();
         setCompany(data);
       } catch (error) {
@@ -32,9 +32,9 @@ const CompanyPage = () => {
     ) : (
       <section className="bg-sky-50">
         <div className="p-6 md:text-left">
-          <h1 className="text-3xl font-bold mb-4">{company.Name} ({company.Symbol})</h1>
+          <h1 className="text-3xl font-bold mb-4">{company.name} ({company.symbol})</h1>
 
-          <p className="mb-4">{company.Description}</p>
+          <p className="mb-4">{company.description}</p>
 
           <div className='flex'>
             <div className='w-1/2'>

@@ -15,9 +15,9 @@ const SearchBar = () => {
   const getCompanies = async (keyword) => {
     const fetchCompanies = async () => { 
         try {
-            const res = await fetch(`/api/companies`);
+            const res = await fetch(`/api/companies/${keyword}`);
             const data = await res.json();
-            setCompanies(data.bestMatches.slice(0, 3));
+            setCompanies(data.slice(0, 3));
         } catch (error) {
             console.log('Error fetching companies', error);
         } finally {
@@ -58,10 +58,10 @@ const SearchBar = () => {
                     {companies.map((company, index) => (
                             <tr className='border hover:bg-gray-100' key={index}>
                                 <td>
-                                    <NavLink className='block w-full h-full px-2' to={`/company/${company['1. symbol']}`}>{company['1. symbol']}</NavLink>
+                                    <NavLink className='block w-full h-full px-2' to={`/company/${company.symbol}`}>{company.symbol}</NavLink>
                                 </td>
                                 <td>
-                                    <NavLink className='block w-full h-full px-8' to={`/company/${company['1. symbol']}`}>{company['2. name']}</NavLink>
+                                    <NavLink className='block w-full h-full px-8' to={`/company/${company.symbol}`}>{company.name}</NavLink>
                                 </td>
                             </tr>
                     ))}

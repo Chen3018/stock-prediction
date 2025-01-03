@@ -9,10 +9,10 @@ const Chart = ({ company }) => {
   useEffect(() => {
     const fetchStockPrices = async () => {
       try {
-        const res = await fetch(`/api/month/${company}`);
+        const res = await fetch(`/api/prices/day/${company}`);
         const data = await res.json();
-        const prices = data['Monthly Time Series'];
-        setClosePrices(Object.keys(prices).map((key) => ({ x: new Date(key), y: Number(prices[key]['4. close']) }) ));
+        const prices = data.map((price) => ({x: new Date(price.date), y: Number(price.price)}));
+        setClosePrices(prices);
       } catch (error) {
         console.log('Error fetching stock prices', error);
       }
