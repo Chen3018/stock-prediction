@@ -15,7 +15,7 @@ const SearchBar = () => {
   const getCompanies = async (keyword) => {
     const fetchCompanies = async () => { 
         try {
-            const res = await fetch(`/api/companies/${keyword}`);
+            const res = await fetch(import.meta.env.VITE_API + `/companies/${keyword}`);
             const data = await res.json();
             setCompanies(data.slice(0, 3));
         } catch (error) {
