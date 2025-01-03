@@ -1,7 +1,12 @@
 const setCORsHeaders = (req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', process.env.FRONTEND_URL);
-    res.setHeader('Access-Control-Allow-Methods', 'GET');
-    res.setHeader('Access-Control-Allow-Headers', 'content-type');
+    const origin = req.headers.origin;
+    if (origin.contains(process.env.FRONTEND_URL)) {
+
+        res.setHeader('Access-Control-Allow-Origin', origin);
+        res.setHeader('Access-Control-Allow-Methods', 'GET');
+        res.setHeader('Access-Control-Allow-Headers', 'content-type');
+    }
+
     next();
 };
 
