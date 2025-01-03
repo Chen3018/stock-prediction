@@ -8,10 +8,13 @@ export default defineConfig({
     port: 3000,
     proxy: {
       '/api': {
-        target: process.env.API,
+        target: 'https://stock-prediction-s2bj.onrender.com/api',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '')
       }
     }
   },
+  build: {
+    commonjsOptions: { transformMixedEsModules: true }
+  }
 })

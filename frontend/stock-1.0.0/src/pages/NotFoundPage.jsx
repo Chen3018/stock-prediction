@@ -15,6 +15,6 @@ const NotFoundPage = () => {
       </Link>
     </section>
   );
-}
+};
 
-export default NotFoundPage
+export default NotFoundPage;

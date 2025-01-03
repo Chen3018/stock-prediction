@@ -33,6 +33,6 @@ const Chart = ({ company }) => {
   return (
     <CanvasJSStockChart options={options} />  
   );
-}
+};
 
-export default Chart
+export default Chart;

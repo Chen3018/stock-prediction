@@ -17,6 +17,6 @@ const Hero = ({ title, subtitle }) => {
         </div>
     </section>
   );
-}
+};
 
-export default Hero
+export default Hero;

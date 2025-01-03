@@ -8,6 +8,6 @@ const HomePage = () => {
         <Hero title='Stock Predictions' subtitle='Find stock price history and trend predictions'/>
     </>
   );
-}
+};
 
-export default HomePage
+export default HomePage;

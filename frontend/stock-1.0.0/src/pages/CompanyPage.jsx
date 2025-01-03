@@ -46,6 +46,6 @@ const CompanyPage = () => {
       </section>
     )
   );
-}
+};
 
-export default CompanyPage
+export default CompanyPage;
