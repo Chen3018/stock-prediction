@@ -9,7 +9,7 @@ const Chart = ({ company }) => {
   useEffect(() => {
     const fetchStockPrices = async () => {
       try {
-        const res = await fetch(`/api/prices/day/${company}`);
+        const res = await fetch(import.meta.env.VITE_API + `/prices/day/${company}`);
         const data = await res.json();
         const prices = data.map((price) => ({x: new Date(price.date), y: Number(price.price)}));
         setClosePrices(prices);

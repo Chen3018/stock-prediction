@@ -13,7 +13,7 @@ const CompanyPage = () => {
   useEffect(() => {
     const fetchCompany = async () => {
       try {
-        const res = await fetch(`/api/companies/info/${id}`);
+        const res = await fetch(import.meta.env.VITE_API + `/companies/info/${id}`);
         const data = await res.json();
         setCompany(data);
       } catch (error) {
