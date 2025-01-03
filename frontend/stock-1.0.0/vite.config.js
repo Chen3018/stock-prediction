@@ -8,7 +8,7 @@ export default defineConfig({
     port: 3000,
     proxy: {
       '/api': {
-        target: 'https://stock-prediction-s2bj.onrender.com/api',
+        target: process.env.API,
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '')
       }
