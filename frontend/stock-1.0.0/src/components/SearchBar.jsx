@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 
 import Spinner from './Spinner';
@@ -11,13 +11,16 @@ const SearchBar = () => {
   const [ showAutoComplete, setShowAutoComplete ] = useState(false);
   const [ companies, setCompanies ] = useState([]);
   const [ loading, setLoading ] = useState(true);
+  const latestRequest = useRef(0);
 
-  const getCompanies = (keyword) => {
+  const getCompanies = (keyword, requestID) => {
     const fetchCompanies = async () => { 
         try {
             const res = await fetch(import.meta.env.VITE_API + `/companies/${keyword}`);
             const data = await res.json();
-            setCompanies(data.slice(0, 3));
+            if (requestID === latestRequest.current){
+                setCompanies(data.slice(0, 3));
+            }
         } catch (error) {
             console.log('Error fetching companies', error);
         } finally {
@@ -46,7 +49,9 @@ const SearchBar = () => {
 
     const debounceTimer = setTimeout(() => {
         setShowAutoComplete(true);
-        getCompanies(keyword);
+        latestRequest.current += 1;
+        const requestID = latestRequest.current;
+        getCompanies(keyword, requestID);
     }, 300);
 
     return () => clearTimeout(debounceTimer);
