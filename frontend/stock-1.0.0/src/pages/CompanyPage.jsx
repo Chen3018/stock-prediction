@@ -71,7 +71,7 @@ const CompanyPage = () => {
 
           <div className='flex'>
             <div className='w-1/2'>
-              <Chart updatePrice={updatePrices} company='IBM' />
+              <Chart updatePrice={updatePrices} company={id} />
             </div>
             <p>Stock Prediction here: WIP</p>
           </div>

@@ -6,8 +6,8 @@ const api = 'https://www.alphavantage.co/query'
 // @route   GET /api/companies/:key
 export const getMatches = async (req, res, next) => {
     const key = req.params.key;
-    //const apiUrl = `${api}?function=SYMBOL_SEARCH&keywords=${key}&apikey=${process.env.API_KEY}`;
-    const apiUrl = `${api}?function=SYMBOL_SEARCH&keywords=tesco&apikey=demo`;
+    const apiUrl = `${api}?function=SYMBOL_SEARCH&keywords=${key}&apikey=${process.env.API_KEY}`;
+    //const apiUrl = `${api}?function=SYMBOL_SEARCH&keywords=tesco&apikey=demo`;
     
     try {
         const response = await get(apiUrl);
@@ -41,8 +41,8 @@ export const getMatches = async (req, res, next) => {
 // @route   GET /api/companies/info/:symbol
 export const getCompany = async (req, res, next) => {
     const symbol = req.params.symbol;
-    //const apiUrl = `${api}?function=OVERVIEW&symbol=${symbol}&apikey=${process.env.API_KEY}`;
-    const apiUrl = `${api}?function=OVERVIEW&symbol=IBM&apikey=demo`;
+    const apiUrl = `${api}?function=OVERVIEW&symbol=${symbol}&apikey=${process.env.API_KEY}`;
+    //const apiUrl = `${api}?function=OVERVIEW&symbol=IBM&apikey=demo`;
     
     try {
         const response = await get(apiUrl);

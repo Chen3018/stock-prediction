@@ -6,8 +6,8 @@ const api = 'https://www.alphavantage.co/query'
 // @route   GET /api/prices/day/:symbol
 export const getDayPrices = async (req, res, next) => {
     const symbol = req.params.symbol;
-    //const apiUrl = `${api}?function=TIME_SERIES_DAILY&symbol=${key}&apikey=${process.env.API_KEY}`;
-    const apiUrl = `${api}?function=TIME_SERIES_DAILY&symbol=IBM&apikey=demo`;
+    const apiUrl = `${api}?function=TIME_SERIES_DAILY&symbol=${symbol}&apikey=${process.env.API_KEY}`;
+    //const apiUrl = `${api}?function=TIME_SERIES_DAILY&symbol=IBM&apikey=demo`;
     
     try {
         const response = await get(apiUrl);
