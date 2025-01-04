@@ -17,11 +17,10 @@ const CompanyPage = () => {
 
   const changeClass = change ? 'text-lg text-green-500' : 'text-lg text-red-500';
 
-  const updatePrices = (latest, previousClose) => {
-    setLatestPrice(latest.price);
+  const updatePrices = (latest, amount) => {
+    setLatestPrice(latest);
 
-    const amount = latest.price - previousClose;
-    const percent = (amount / previousClose) * 100;
+    const percent = (amount / latest) * 100;
     if (amount > 0) {
       setChange(true);
       setChangeAmount(`+${amount.toFixed(2)}`);
@@ -39,6 +38,7 @@ const CompanyPage = () => {
         const res = await fetch(import.meta.env.VITE_API + `/companies/info/${id}`);
         const data = await res.json();
         setCompany(data);
+        updatePrices(Number(data.price), Number(data.change))
       } catch (error) {
         console.log('Error fetching company', error);
       } finally {
@@ -47,7 +47,7 @@ const CompanyPage = () => {
     }
 
     fetchCompany();
-  }, []);
+  }, [id]);
 
   return (
     loading ? (
@@ -74,7 +74,7 @@ const CompanyPage = () => {
 
           <div className='flex'>
             <div className='w-1/2'>
-              <Chart updatePrice={updatePrices} company={id} />
+              <Chart company={id} />
             </div>
             <p>Stock Prediction here: WIP</p>
           </div>

@@ -1,9 +1,11 @@
 import React from 'react';
 import CanvasJSReact from '@canvasjs/react-stockcharts';
 import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
-const Chart = ({ updatePrice, company }) => {
+const Chart = ({ company }) => {
   const CanvasJSStockChart = CanvasJSReact.CanvasJSStockChart;
+  const { id } = useParams();
   const [closePrices, setClosePrices] = React.useState([]);
 
   useEffect(() => {
@@ -13,14 +15,13 @@ const Chart = ({ updatePrice, company }) => {
         const data = await res.json();
         const prices = data.map((price) => ({x: new Date(price.date), y: Number(price.price)}));
         setClosePrices(prices);
-        updatePrice(data[0], data[1].price);
       } catch (error) {
         console.log('Error fetching stock prices', error);
       }
     }
 
     fetchStockPrices();
-  }, []);
+  }, [id]);
 
   const options = {
     charts: [{

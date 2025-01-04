@@ -34,7 +34,12 @@ export const getMatches = async (req, res, next) => {
                 others.push(data[i]);
             }
         }
-
+        console.log("first");
+        console.log(data);
+        console.log("second");
+        console.log(prioritized);
+        console.log("third");
+        console.log(others);
         res.status(200).json(prioritized.concat(others));
     } catch (error) {
         console.log('Error searching keyword', error);
