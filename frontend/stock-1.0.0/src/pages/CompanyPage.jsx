@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { FaCaretUp } from 'react-icons/fa';
+import { FaCaretUp, FaCaretDown } from 'react-icons/fa';
 
 import Spinner from '../components/Spinner';
 import Chart from '../components/Chart';
@@ -16,7 +16,6 @@ const CompanyPage = () => {
   const [ changePercent, setChangePercent ] = useState('');
 
   const changeClass = change ? 'text-lg text-green-500' : 'text-lg text-red-500';
-  const symbolClass = change ? 'text-3xl text-green-500' : 'text-3xl text-red-500';
 
   const updatePrices = (latest, previousClose) => {
     setLatestPrice(latest.price);
@@ -60,7 +59,11 @@ const CompanyPage = () => {
 
           <div className='flex space-x-2'>
             <p className="text-3xl">{latestPrice}</p>
-            <FaCaretUp className={symbolClass} />
+            { change ? (
+              <FaCaretUp className='text-3xl text-green-500' />
+            ) : (
+              <FaCaretDown className='text-3xl text-red-500' />
+            )}
           </div>
 
           <div className='flex space-x-2'>
