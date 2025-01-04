@@ -12,7 +12,7 @@ const SearchBar = () => {
   const [ companies, setCompanies ] = useState([]);
   const [ loading, setLoading ] = useState(true);
 
-  const getCompanies = async (keyword) => {
+  const getCompanies = (keyword) => {
     const fetchCompanies = async () => { 
         try {
             const res = await fetch(import.meta.env.VITE_API + `/companies/${keyword}`);
@@ -30,12 +30,6 @@ const SearchBar = () => {
 
   const searchKeyword = (e) => {
     setKeyword(e.target.value);
-    if (e.target.value.length > 0) {
-        setShowAutoComplete(true);
-        getCompanies(e.target.value);
-    } else {
-        setShowAutoComplete(false);
-    }
   };
 
   useEffect(() => {
@@ -43,6 +37,20 @@ const SearchBar = () => {
     setShowAutoComplete(false);
     setLoading(true);
   }, [location]);
+
+  useEffect(() => {
+    if (!keyword.trim()) {
+        setShowAutoComplete(false);
+        return;
+    }
+
+    const debounceTimer = setTimeout(() => {
+        setShowAutoComplete(true);
+        getCompanies(keyword);
+    }, 300);
+
+    return () => clearTimeout(debounceTimer);
+  }, [keyword]);
 
   return (
     <div>
