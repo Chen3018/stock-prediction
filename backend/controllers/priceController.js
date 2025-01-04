@@ -1,28 +1,29 @@
 import get from 'axios';
 
-const api = 'https://www.alphavantage.co/query'
+const api = 'https://financialmodelingprep.com/api/v3'
 
 // @desc    Get daily stock prices for a company
 // @route   GET /api/prices/day/:symbol
 export const getDayPrices = async (req, res, next) => {
     const symbol = req.params.symbol;
-    const apiUrl = `${api}?function=TIME_SERIES_DAILY&symbol=${symbol}&apikey=${process.env.API_KEY}`;
-    //const apiUrl = `${api}?function=TIME_SERIES_DAILY&symbol=IBM&apikey=demo`;
+    const today = new Date();
+    const twoYearsAgo = `${today.getFullYear() - 2}-${today.getMonth() + 1}-${today.getDate()}`;
+    const apiUrl = `${api}/historical-price-full/${symbol}?from=${twoYearsAgo}&apikey=${process.env.API_KEY}`;
     
     try {
         const response = await get(apiUrl);
         const data = response.data;
 
-        if (!data['Time Series (Daily)']) {
+        if (!data.symbol) {
             const error = new Error(`Error getting daily prices for ${symbol}`);
             error.status = 404;
             return next(error);
         }
 
-        const prices = Object.keys(data['Time Series (Daily)']).map((key) => {
+        const prices = data.historical.map((value) => {
             return {
-                date: key,
-                price: data['Time Series (Daily)'][key]['4. close'],
+                date: value.date,
+                price: value.close,
             }
         })
 
