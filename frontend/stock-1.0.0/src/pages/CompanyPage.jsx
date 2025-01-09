@@ -14,8 +14,16 @@ const CompanyPage = () => {
   const [ change, setChange ] = useState(true);
   const [ changeAmount, setChangeAmount ] = useState('');
   const [ changePercent, setChangePercent ] = useState('');
+  const [showFullDescription, setShowFullDescription] = useState(false);
 
   const changeClass = change ? 'text-lg text-green-500' : 'text-lg text-red-500';
+
+  let description = company.description;
+
+  if (!showFullDescription) {
+    console.log(description.substring(0, 100));
+    description = description.substring(0, 1000) + '...';
+  }
 
   const updatePrices = (latest, amount) => {
     setLatestPrice(latest);
@@ -70,13 +78,30 @@ const CompanyPage = () => {
             <p className={changeClass}>{changeAmount + ' ' + changePercent}</p>
           </div>
 
-          <p className="mb-4">{company.description}</p>
+          <p className="mb-4">{description}</p>
+
+          <button
+          onClick={() => setShowFullDescription((prevState) => !prevState)}
+          className='text-sky-500 mb-5 hover:text-sky-600'
+          >
+          {showFullDescription ? 'Less' : 'More'}
+          </button>
 
           <div className='flex'>
             <div className='w-1/2'>
               <Chart company={id} />
             </div>
-            <p>Stock Prediction here: WIP</p>
+            
+            <div className='flex-1 flex justify-center'>
+              <div>
+                <p className='text-2xl'>Next Hour Prediction</p>
+
+                <div className='flex items-center justify-center'>
+                  <p className='text-xl'>100</p>
+                  <FaCaretUp className='text-3xl text-green-500' />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
