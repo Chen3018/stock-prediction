@@ -1,6 +1,6 @@
 import get from 'axios';
 
-const api = 'https://financialmodelingprep.com/api/v3'
+const api = process.env.API_URL;
 
 // @desc    Get daily stock prices for a company
 // @route   GET /api/prices/day/:symbol

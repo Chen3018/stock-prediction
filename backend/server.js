@@ -1,6 +1,7 @@
 import express from 'express';
 import companies from './routes/companies.js';
 import prices from './routes/prices.js';
+import predictions from './routes/predictions.js';
 
 import logger from './middleware/logger.js';
 import setCORsHeaders from './middleware/allowCORs.js';
@@ -19,6 +20,7 @@ app.use(setCORsHeaders);
 // Routes
 app.use('/api/companies', companies);
 app.use('/api/prices', prices);
+app.use('/api/predictions', predictions);
 
 
 app.use(notFound);

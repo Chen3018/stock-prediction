@@ -5,6 +5,7 @@ import { FaCaretUp, FaCaretDown } from 'react-icons/fa';
 
 import Spinner from '../components/Spinner';
 import Chart from '../components/Chart';
+import { use } from 'react';
 
 const CompanyPage = () => {
   const { id } = useParams();
@@ -14,19 +15,20 @@ const CompanyPage = () => {
   const [ change, setChange ] = useState(true);
   const [ changeAmount, setChangeAmount ] = useState('');
   const [ changePercent, setChangePercent ] = useState('');
-  const [showFullDescription, setShowFullDescription] = useState(false);
+  const [ showFullDescription, setShowFullDescription ] = useState(false);
+  const [ prediction, setPrediction ] = useState(-1);
+  const [ predictionChange, setPredictionChange ] = useState(true);
 
   const changeClass = change ? 'text-lg text-green-500' : 'text-lg text-red-500';
 
   let description = company.description;
 
-  if (!showFullDescription) {
-    console.log(description.substring(0, 100));
+  if (!showFullDescription && company.description && company.description.length > 1000) {
     description = description.substring(0, 1000) + '...';
   }
 
   const updatePrices = (latest, amount) => {
-    setLatestPrice(latest);
+    setLatestPrice(latest.toFixed(2));
 
     const percent = (amount / latest) * 100;
     if (amount > 0) {
@@ -54,8 +56,24 @@ const CompanyPage = () => {
       }
     }
 
+    const fetchPrediction = async () => {
+      try {
+        const res = await fetch(import.meta.env.VITE_API + `/predictions/${id}`);
+        const data = await res.json();
+        setPrediction(Number(data.prediction).toFixed(2));
+      } catch (error) {
+        console.log('Error fetching prediction', error);
+      }
+    }
+
+    setPrediction(-1);
     fetchCompany();
+    fetchPrediction();
   }, [id]);
+
+  useEffect(() => {
+    setPredictionChange(prediction > latestPrice);
+  }, [latestPrice, prediction]);
 
   return (
     loading ? (
@@ -84,7 +102,9 @@ const CompanyPage = () => {
           onClick={() => setShowFullDescription((prevState) => !prevState)}
           className='text-sky-500 mb-5 hover:text-sky-600'
           >
-          {showFullDescription ? 'Less' : 'More'}
+          { company.description && company.description.length > 1000 ?
+            (showFullDescription ? 'Less' : 'More') : ''
+          }
           </button>
 
           <div className='flex'>
@@ -97,8 +117,17 @@ const CompanyPage = () => {
                 <p className='text-2xl'>Next Hour Prediction</p>
 
                 <div className='flex items-center justify-center'>
-                  <p className='text-xl'>100</p>
-                  <FaCaretUp className='text-3xl text-green-500' />
+                  { prediction === -1 ? 
+                    <Spinner loading={true} /> :
+                    (<>
+                      <p className='text-xl'>{prediction}</p>
+                      { predictionChange ? (
+                        <FaCaretUp className='text-3xl text-green-500' />
+                      ) : (
+                        <FaCaretDown className='text-3xl text-red-500' />
+                      )}
+                    </>)
+                  }
                 </div>
               </div>
             </div>

@@ -1,6 +1,6 @@
 import get from 'axios';
 
-const api = 'https://financialmodelingprep.com/api/v3'
+const api = process.env.API_URL;
 
 // @desc    Get best matches for a keyword
 // @route   GET /api/companies/:key
